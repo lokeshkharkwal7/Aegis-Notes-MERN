@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import MyContext from "../context/notes/noteContext";
 
 function NoteForm() {
-     useEffect(() => {
-        fetchData(); // this will call the fetchData before rendering
-      },[]); 
+    //  useEffect(() => {
+    //     fetchData(); // this will call the fetchData before rendering
+    //   },[]); 
   // context variables a
   const { notes, addNote, fetchData, updateNoteInContext } =
     useContext(MyContext);

@@ -43,16 +43,13 @@ function Loginpage() {
         const auth_token = await response.json(); // parses JSON response into native JavaScript objects
         // changeAuthToken(auth_token);
         localStorage.setItem("auth_token", auth_token.authToken);
-          console.log(
-            "auth_token extracted",
-            localStorage.getItem("auth_token")
-          );
+        console.log("auth_token extracted", localStorage.getItem("auth_token"));
         console.log(auth_token.status);
         if (auth_token.status === true) {
           alert(`Welcome ${email} `);
           navigate("/home");
-
-          
+          window.location.reload();
+          console.log("Reload done in login page");
         } else {
           alert("Invalid credentials");
         }

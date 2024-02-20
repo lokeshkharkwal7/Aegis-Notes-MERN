@@ -11,10 +11,10 @@ function Navbar() {
   let location = useLocation();
   const navigate = useNavigate();
   // using useeffect hook which will call itself at the end of the compile not necessary
-  React.useEffect(() => {
-    // Google Analytics
-    console.log(location.pathname);
-  }, [location]);
+  // React.useEffect(() => {
+  //   // Google Analytics
+  //   console.log(location.pathname);
+  // }, [location]);
 
   const deactivateAuthToken = () => {
     localStorage.removeItem("auth_token");

@@ -9,9 +9,9 @@ function NoteCard({ note, updateNote }) {
   const onUpdate = () => {
     updateNote(note);
   };
-  useEffect(() => {
-    fetchData();
-  },[]);
+  // useEffect(() => {
+  //   fetchData();
+  // },[]);
 
   return (
     <div>
