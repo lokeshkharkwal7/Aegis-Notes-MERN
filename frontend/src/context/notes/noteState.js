@@ -5,7 +5,12 @@ import NoteContext from "./noteContext";
 const NoteState = (props) => {
   // importing the initial state of notes from the fetch api
   const auth_token = localStorage.getItem("auth_token");
-  console.log("The value of auth-token inside note state", auth_token);
+  console.log(
+    "The value of auth-token inside note state",
+    auth_token,
+    typeof auth_token,
+    "  elements : "
+  );
 
   const host = "http://localhost:4000";
   const [notes, setNotes] = useState([

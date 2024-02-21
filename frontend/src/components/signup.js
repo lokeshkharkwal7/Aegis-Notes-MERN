@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import notepicture from "../photos/signup.png";
 
 function Signup() {
   const [signupData, setSignUpData] = useState({
@@ -25,6 +26,7 @@ function Signup() {
         email: signupData.semail,
         password: signupData.spassword,
       };
+      console.log("Data inside the sign up file : ", data);
       const response = await fetch("http://localhost:4000/auth/createUser", {
         method: "POST",
         headers: {
@@ -35,19 +37,25 @@ function Signup() {
       if (response.ok) {
         try {
           let auth_token = await response.json(); // parses JSON response into native JavaScript objects
-          
-          if(auth_token.status){
-          alert(`Sign Up Successfull ${data.name}`);
-          console.log(
-            "New value of Authentication token from sign up from auth token api is : ",
-            auth_token
-          );
-          navigate("/home");
 
-          // MOST IMP SAVING TO A LOCAL STORAGE WITH THE NAME OF AUTH-LOGIN
-          localStorage.setItem("signUpToken", auth_token);}
-          else{
-            alert(auth_token.message)
+          if (auth_token.status) {
+            alert(`Sign Up Successfull ${data.name}`);
+            console.log(
+              "New value of Authentication token from sign up from auth token api is : ",
+              auth_token
+            );
+            if (auth_token.status) {
+              console.log("I was successfully called navigate home");
+              localStorage.setItem("auth-token", auth_token.token);
+              alert("Welcome to the login page");
+
+              // MOST IMP SAVING TO A LOCAL STORAGE WITH THE NAME OF AUTH-LOGIN
+              localStorage.setItem("auth_token", auth_token.token);
+              navigate("/home");
+            }
+            window.location.reload();
+          } else {
+            alert(auth_token.message);
           }
         } catch (error) {
           alert("Please fill the details correctly");
@@ -65,81 +73,93 @@ function Signup() {
   };
 
   return (
-    <div className="container">
-      <h2 className="display-1 fs-1">Sign Up </h2>
+    <div className="container d-flex flex-wrap">
+      <div className="col-md-4 mb-4">
+        <img
+          src={notepicture}
+          className="img-fluid"
+          style={{ maxWidth: "100%" }}
+          alt="..."
+        />
+      </div>
 
-      <form>
-        <div className="mb-3 my-4">
-          <label htmlFor="exampleInputName" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="sname"
-            name="sname"
-            aria-describedby="nameHelp"
-            onChange={onChange}
-          />
-          <div id="nameHelp" className="form-text">
-            Enter your full name.
+      <div className="col-md-8">
+        <div className="container">
+          <h2 className="display-1 fs-1">Sign Up</h2>
+          <form>
+          <div className="mb-3 my-4">
+            <label htmlFor="exampleInputName" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="sname"
+              name="sname"
+              aria-describedby="nameHelp"
+              onChange={onChange}
+            />
+            <div id="nameHelp" className="form-text">
+              Enter your full name.
+            </div>
           </div>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="semail"
-            name="semail"
-            aria-describedby="emailHelp"
-            onChange={onChange}
-          />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+          <div className="mb-3">
+            <label htmlFor="exampleInputEmail" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="semail"
+              name="semail"
+              aria-describedby="emailHelp"
+              onChange={onChange}
+            />
+            <div id="emailHelp" className="form-text">
+              We'll never share your email with anyone else.
+            </div>
           </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="spassword"
+              name="spassword"
+              onChange={onChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputConfirmPassword" className="form-label">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="cpassword"
+              name="scpassword"
+              onChange={onChange}
+            />
+          </div>
+          <div className="mb-3 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="exampleCheck1"
+            />
+          </div>
+          <button
+            type="submit"
+            className="btn btn-primary"
+            onClick={apiCallSignUP}
+          >
+            Submit
+          </button>
+        </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="spassword"
-            name="spassword"
-            onChange={onChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputConfirmPassword" className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="cpassword"
-            name="scpassword"
-            onChange={onChange}
-          />
-        </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={apiCallSignUP}
-        >
-          Submit
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

@@ -13,6 +13,7 @@ import MyContext from "../src/context/notes/noteContext";
 
 function App() {
   // creating a state for alert message
+  // const {fetchData, authToken} = useContext(MyContext)
   const [alertstatus, SetAlertStatus] = useState(true);
   function status() {
     {
@@ -22,6 +23,11 @@ function App() {
     }
   }
 
+  // useEffect(()=>{
+
+  //   fetchData();
+  // },[])
+
  
   return (
     <>
@@ -30,12 +36,15 @@ function App() {
         {/* your normal code  */}
         <Navbar />
         <Alert message={"Hi, this is a simple alert message"} />;
+        
+
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
+
           <Route path="/login" element={<Loginpage />} />
           <Route path="/signup" element={<Signup />} />
-        </Routes>
+        </Routes> 
       </NoteState>
     </>
   );

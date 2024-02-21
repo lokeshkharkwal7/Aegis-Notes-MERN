@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import MyContext from "../context/notes/noteContext";
+import notepicture from "../photos/login.png";
 
 function Loginpage() {
   // importing the context
@@ -48,6 +49,9 @@ function Loginpage() {
         if (auth_token.status === true) {
           alert(`Welcome ${email} `);
           navigate("/home");
+          console.log(
+            "loginpage : we have reloded the page after navigating to home"
+          );
           window.location.reload();
           console.log("Reload done in login page");
         } else {
@@ -63,51 +67,72 @@ function Loginpage() {
 
   // creating an Onclick function which will fetch the api and will get us a authentication token
   return (
-    <div className="container">
-      <h2 className="display-1 fs-1 ">Sign In</h2>
-      <form>
-        <div className="mb-3 my-4">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            aria-describedby="emailHelp"
-            onChange={onChange}
-            name="email"
-            id="email"
+    <div className="container mt-4">
+      <div className="row">
+        {/* Image Column */}
+        <div className="col-md-4 mb-4">
+          <img
+            src={notepicture}
+            className="img-fluid"
+            style={{ maxWidth: "100%" }}
+            alt="..."
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+        </div>
+
+        {/* Form Column */}
+        <div className="col-md-8">
+          <div className="container">
+            <h2 className="display-1 fs-1">Sign In</h2>
+            <form>
+              <div className="mb-3 my-4">
+                <label htmlFor="exampleInputEmail1" className="form-label">
+                  Email address
+                </label>
+                <input
+                  type="email"
+                  className="form-control"
+                  aria-describedby="emailHelp"
+                  onChange={onChange}
+                  name="email"
+                  id="email"
+                />
+                <div id="emailHelp" className="form-text">
+                  We'll never share your email with anyone else.
+                </div>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="exampleInputPassword1" className="form-label">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  onChange={onChange}
+                  name="password"
+                  id="password"
+                />
+              </div>
+              <div className="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id="exampleCheck1"
+                />
+                <label className="form-check-label" htmlFor="exampleCheck1">
+                  I agree the policies
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary mt-4"
+                onClick={onSubmit}
+              >
+                Submit
+              </button>
+            </form>
           </div>
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            onChange={onChange}
-            name="password"
-            id="password"
-          />
-        </div>
-        <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
-        <button type="submit" className="btn btn-primary" onClick={onSubmit}>
-          Submit
-        </button>
-      </form>
+      </div>
     </div>
   );
 }

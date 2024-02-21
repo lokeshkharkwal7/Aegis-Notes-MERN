@@ -29,7 +29,7 @@ function Navbar() {
       >
         <div className="container-fluid">
           <Link className="navbar-brand" to="#">
-            Navbar
+            K Notes
           </Link>
           <button
             className="navbar-toggler"
@@ -71,9 +71,9 @@ function Navbar() {
               </li>
             </ul>
           </div>
-  
+
           {/* Login and Sign Up Buttons */}
-          <form className="d-flex">
+          <form className="d-flex ml-auto">
             {authToken === null ? (
               <>
                 <Link
@@ -83,29 +83,43 @@ function Navbar() {
                 >
                   Login
                 </Link>
+                <Link
+                  className="btn btn-primary me-2"
+                  to="/signup"
+                  role="button"
+                >
+                  Sign up
+                </Link>
               </>
             ) : (
-              <Link
-                className="btn btn-primary me-2 "
-                to="/login"
-                role="button"
-                onClick={deactivateAuthToken}
-              >
-                Log Out
-              </Link>
+              location.pathname === "/login" ? (
+                <>
+                  <Link
+                    className="btn btn-primary me-2"
+                    to="/signup"
+                    role="button"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    className="btn btn-primary me-2 "
+                    to="/login"
+                    role="button"
+                    onClick={deactivateAuthToken}
+                  >
+                    Log Out
+                  </Link>
+                </>
+              )
             )}
-            <Link
-              className="btn btn-primary me-2"
-              to="/signup"
-              role="button"
-            >
-              Sign up
-            </Link>
           </form>
         </div>
       </nav>
     </div>
   );
-  
-            }
+};
+
 export default Navbar;
