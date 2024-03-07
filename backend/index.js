@@ -4,7 +4,14 @@ var cors = require('cors')
  const express = require("express");
 const app = express();
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: [""],
+  // origin: ["https://wizstore.vercel.app"],
+ 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  // credentials: true
+}))
+
 
 
 // importing the connection
