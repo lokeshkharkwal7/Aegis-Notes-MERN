@@ -1,16 +1,12 @@
-import { body } from "express-validator";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 // use history is not working
-import { useHistory } from "react-router-dom";
 // so using usenavigate
 import { useNavigate } from "react-router-dom";
 
-import MyContext from "../context/notes/noteContext";
 import notepicture from "../photos/login.png";
 
 function Loginpage() {
   // importing the context
-  const { changeAuthToken } = useContext(MyContext);
 
   // getting the text which is inside the text box
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -68,6 +64,7 @@ function Loginpage() {
   // creating an Onclick function which will fetch the api and will get us a authentication token
   return (
     <div className="container mt-4">
+      <br /> <br />
       <div className="row">
         {/* Image Column */}
         <div className="col-md-4 mb-4">

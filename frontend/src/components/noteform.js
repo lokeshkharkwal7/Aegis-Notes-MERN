@@ -1,25 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import MyContext from "../context/notes/noteContext";
+import React, { useEffect, useState } from "react";
 import notepicture from "../photos/notebg.png";
 import { useNavigate } from "react-router-dom";
+import { addNote } from "./ProjectApi/noteApiCalls";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNotes } from "./ProjectApi/noteApiCalls";
+import { addNoteReducer } from "./slicers/noteSlicer";
 
-function NoteForm() {
-  useEffect(() => {
-    if (authToken.length > 5) {
-      console.log("Auth token is not null : ", typeof authToken);
-      fetchData();
+function NoteForm({ clickOnShowNoteRef }) {
+  const authToken = localStorage.getItem("auth_token");
 
-      // Call the fetchData function only if data hasn't been fetched
-    } else if (authToken === null) {
-      console.log("Auth token is not available : ", authToken);
-      // Redirect to the login page
-      navigate("/login");
-      console.log("Auth token is not available 2");
-    }
-  }, []);
-  // context variables
-  const { notes, addNote, fetchData, updateNoteInContext, authToken } =
-    useContext(MyContext);
+  let notes = useSelector((state) => {
+    return state.NOTESLICER;
+  });
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -27,31 +20,51 @@ function NoteForm() {
 
   const onChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value); // this will be the text inside the form input
-    // setText is the state variable
     setText({ ...text, [e.target.name]: e.target.value }); //main logic
-    console.log(text);
   };
 
   // creating an settingNote function
 
   const [text, setText] = useState({ title: "", body: "", tag: "" });
+  const [clickCounter, setClickCounter] = useState(0);
 
-  const settingNote = (e) => {
+  const ClickedAddNote = async (e) => {
     e.preventDefault();
     // getting all the values that were inside the text boxes
     const { title, body, tag } = text;
+    // Making API Calls for Add Note
+    addNote(dispatch, title, body, tag);
+    // just  to make sure the useeffect work well
 
-    addNote(title, body, tag);
-    console.log("Note value returned by the form ", text);
+    setClickCounter(clickCounter + 1);
+
+    clickOnShowNoteRef();
+    // due to some problem clicking the category navbar to update the changes
+
+    console.log(
+      "The Value of notes inside redux state after note edit is : ",
+      notes
+    );
+    // Resetting the title body and tag for other entries
     setText({ title: "", body: "", tag: "" });
   };
 
+  useEffect(() => {
+    if (authToken && authToken.length > 5) {
+      fetchNotes(dispatch);
+    } else {
+      console.log(
+        "home.js: value of auth token is null so we are redirecting to login page"
+      );
+      navigate("/login");
+    }
+  }, [clickCounter]);
   return (
     <>
-      <div className="container d-flex flex-wrap">
+      <br />
+      <div className="container-flex d-flex flex-wrap mt-5 px-5">
         {" "}
-        <div className="col-md-4 mb-4">
+        <div className="col-md-7 mb-4">
           <img
             src={notepicture}
             className="img-fluid"
@@ -60,9 +73,11 @@ function NoteForm() {
           />
         </div>
         <div>
-          <div className="col-md-15">
-            <div className="container">
-              <h1 className="display-4">Add a Note</h1>
+          <div className="col-md-25">
+            <div className="container-fluid">
+              <h1 className="display-4">
+                Add a Note <i className="fa-regular fa-note-sticky"></i>
+              </h1>
               <form>
                 <div className="mb-3">
                   <label htmlFor="title" className="form-label">
@@ -74,6 +89,7 @@ function NoteForm() {
                     id="title"
                     name="title"
                     onChange={onChange}
+                    // for resetting the fields after every submit
                     value={text.title}
                     required
                   />
@@ -96,25 +112,26 @@ function NoteForm() {
 
                 <div className="mb-3">
                   <label htmlFor="tag" className="form-label">
-                    Tag
+                    Note Category
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
+                  <select
                     id="tag"
+                    className="form-select"
                     onChange={onChange}
                     name="tag"
                     value={text.tag}
-                    required
-                  />
+                  >
+                    <option value="" className="text-secondary " disabled>
+                      Select Category
+                    </option>
+                    <option className="text-primary">Personal</option>
+                    <option className="text-success">Work/Study</option>
+                    <option className="text-info">Ideas and Creativity</option>
+                    <option className="text-danger">To-Do List</option>
+                  </select>
                 </div>
 
                 <div className="mb-3 form-check">
-                  <input
-                    type="checkbox"
-                    className="form-check-input"
-                    id="exampleCheck1"
-                  />
                   <label
                     className="form-check-label"
                     htmlFor="exampleCheck1"
@@ -123,7 +140,7 @@ function NoteForm() {
                 <button
                   type="submit"
                   className="btn btn-primary"
-                  onClick={settingNote}
+                  onClick={ClickedAddNote}
                   disabled={
                     text.title.length < 3 || text.body.length < 3 ? true : false
                   }

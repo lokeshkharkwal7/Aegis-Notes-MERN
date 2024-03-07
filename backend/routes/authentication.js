@@ -142,7 +142,7 @@ router.post("/api/auth/getuser", fetchuser, async (req, resp) => {
       return resp.json({ error: "User not found" , status: false});
     }
 
-    // Send the user details as a response in json format
+    // Send the user details as a response in json format 
     resp.json(user);
 
     // in any case any error occured

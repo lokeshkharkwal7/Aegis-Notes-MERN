@@ -7,7 +7,7 @@ const dateParser = (obj) => {
  
   rawdate = String(new Date(obj));
   return rawdate.slice(0,24);
-};
+}; 
 
 const noteSchema = new Schema({
   // making a foreign key to make a connection between the user: will make sure that each note will also have a user id of the person who have created this note

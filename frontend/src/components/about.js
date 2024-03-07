@@ -4,6 +4,8 @@ import notepicture from "../photos/notes.jpg";
 function About() {
   return (
     <div>
+      <br />
+
       <h1 className=""></h1>
       <div className="card mb-3" style={{ maxWidth: 1200 }}>
         <div className="row g-0">
@@ -57,8 +59,6 @@ function About() {
           </div>
         </div>
       </div>
-
-      
     </div>
   );
 }

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Alert({ message }) {
   return (
     <div>
-      <div className="alert alert-primary" role="alert">
+      <div className="alert alert-success text-center" role="alert">
         {message}
       </div>
     </div>

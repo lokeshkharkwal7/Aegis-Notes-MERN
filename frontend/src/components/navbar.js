@@ -1,35 +1,27 @@
-import React, { useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import MyContext from "../context/notes/noteContext";
 
 function Navbar() {
   // using context
-  const { authToken } = useContext(MyContext);
-
+  const authToken = localStorage.getItem("auth_token");
   // using useLocation hook
   let location = useLocation();
   const navigate = useNavigate();
-  // using useeffect hook which will call itself at the end of the compile not necessary
-  // React.useEffect(() => {
-  //   // Google Analytics
-  //   console.log(location.pathname);
-  // }, [location]);
 
   const deactivateAuthToken = () => {
-    localStorage.removeItem("auth_token");
+    localStorage.setItem("auth_token", null);
     navigate("/login");
   };
 
   return (
     <div>
       <nav
-        className="navbar navbar-expand-lg bg-dark border-bottom border-body fixed-top"
+        className="navbar navbar-expand-lg bg-secondary border-bottom border-body fixed-top"
         data-bs-theme="dark"
       >
         <div className="container-fluid">
           <Link className="navbar-brand" to="#">
-            K Notes
+            Aegis Notes
           </Link>
           <button
             className="navbar-toggler"
@@ -44,31 +36,37 @@ function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className={`nav-item`}>
-                <Link
-                  className={`nav-link ${
-                    location.pathname === "/home"
-                      ? "active bg-secondary text-alert"
-                      : ""
-                  }aria-current="true"`}
-                  aria-current="page"
-                  to="home"
-                >
-                  Home
-                </Link>
-              </li>
-              <li className={`nav-item`}>
-                <Link
-                  className={`nav-link ${
-                    location.pathname === "/about"
-                      ? "active bg-secondary text-light"
-                      : ""
-                  }aria-current="true"`}
-                  to="about"
-                >
-                  About
-                </Link>
-              </li>
+              {localStorage.getItem("auth_token") && (
+                <>
+                  <li className={`nav-item`}>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/home"
+                          ? "active bg-dark text-alert"
+                          : ""
+                      }aria-current="true"`}
+                      aria-current="page"
+                      to="home"
+                      style={{ borderRadius: "25%" }}
+                    >
+                      <i className="fa-solid fa-house-chimney mx-1"></i> Home
+                    </Link>
+                  </li>
+                  <li className={`nav-item`}>
+                    <Link
+                      className={`nav-link ${
+                        location.pathname === "/about"
+                          ? "active bg-dark text-light"
+                          : ""
+                      }aria-current="true"`}
+                      to="about"
+                      style={{ borderRadius: "25%" }}
+                    >
+                      About
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -76,50 +74,36 @@ function Navbar() {
           <form className="d-flex ml-auto">
             {authToken === null ? (
               <>
-                <Link
-                  className="btn btn-primary me-2"
-                  to="/login"
-                  role="button"
-                >
+                <Link className="btn btn-light me-2" to="/login" role="button">
                   Login
                 </Link>
-                <Link
-                  className="btn btn-primary me-2"
-                  to="/signup"
-                  role="button"
-                >
+                <Link className="btn btn-light me-2" to="/signup" role="button">
+                  Sign up
+                </Link>
+              </>
+            ) : location.pathname === "/login" ? (
+              <>
+                <Link className="btn btn-light me-2" to="/signup" role="button">
                   Sign up
                 </Link>
               </>
             ) : (
-              location.pathname === "/login" ? (
-                <>
-                  <Link
-                    className="btn btn-primary me-2"
-                    to="/signup"
-                    role="button"
-                  >
-                    Sign up
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link
-                    className="btn btn-primary me-2 "
-                    to="/login"
-                    role="button"
-                    onClick={deactivateAuthToken}
-                  >
-                    Log Out
-                  </Link>
-                </>
-              )
+              <>
+                <Link
+                  className="btn btn-light me-2 "
+                  to="/login"
+                  role="button"
+                  onClick={deactivateAuthToken}
+                >
+                  Log Out
+                </Link>
+              </>
             )}
           </form>
         </div>
       </nav>
     </div>
   );
-};
+}
 
 export default Navbar;
