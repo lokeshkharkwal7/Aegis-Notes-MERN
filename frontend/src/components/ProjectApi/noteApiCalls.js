@@ -4,8 +4,7 @@ import {
   deleteNoteReducer,
   fetchDataReducer
 } from "../slicers/noteSlicer";
-import { toast } from "react-toastify"; // Assuming you're using React Toastify for notifications
-
+ 
 const auth_token = localStorage.getItem("auth_token");
 const host = "https://aegis-notes-mern-backend.vercel.app";
 
@@ -49,11 +48,11 @@ export const addNote = async (dispatch, title, body_, tag) => {
     } else {
       const errorText = await response.text();
       console.error("Error adding note:", errorText);
-      toast.error("An error occurred while adding the note."); // Show error notification
+      alert("An error occurred while adding the note."); // Show error notification
     }
   } catch (error) {
     console.error("Error adding note:", error);
-    toast.error("An error occurred while adding the note."); // Show error notification
+    alert("An error occurred while adding the note."); // Show error notification
   }
 };
 
@@ -73,11 +72,11 @@ export const deleteNote = async (dispatch, id) => {
       console.log("Value of id passed in the delete node is : ", id);
       const errorText = await response.text();
       console.error("Error deleting note:", errorText);
-      toast.error("An error occurred while deleting the note."); // Show error notification
+      alert("An error occurred while deleting the note."); // Show error notification
     }
   } catch (error) {
     console.error("Error deleting note:", error);
-    toast.error("An error occurred while deleting the note."); // Show error notification
+    alert("An error occurred while deleting the note."); // Show error notification
   }
 };
 
@@ -104,10 +103,10 @@ export const updateNote = async (dispatch, id, title, body_, tag) => {
     } else {
       const errorText = await response.text();
       console.error("Error updating note:", errorText);
-      toast.error("An error occurred while updating the note."); // Show error notification
+      alert("An error occurred while updating the note."); // Show error notification
     }
   } catch (error) {
     console.error("Error updating note:", error);
-    toast.error("An error occurred while updating the note."); // Show error notification
+    alert("An error occurred while updating the note."); // Show error notification
   }
 };
