@@ -7,11 +7,11 @@ import {
 import { toast } from "react-toastify"; // Assuming you're using React Toastify for notifications
 
 const auth_token = localStorage.getItem("auth_token");
-const host = "http://localhost:4000";
+const host = "https://aegis-notes-mern-backend.vercel.app";
 
 export const fetchNotes = async (dispatch) => {
   const response = await fetch(
-    "http://localhost:4000/notes/api/fetchingNotes",
+    "https://aegis-notes-mern-backend.vercel.app/notes/api/fetchingNotes",
     {
       method: "GET",
       headers: {
