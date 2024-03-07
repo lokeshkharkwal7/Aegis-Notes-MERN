@@ -5,7 +5,7 @@ var cors = require('cors')
 const app = express();
 app.use(express.json())
 app.use(cors({
-  origin: [""],
+  origin: ["https://aegis-notes-mern-frontend-git-main-lokeshkharkwal7s-projects.vercel.app"],
   // origin: ["https://wizstore.vercel.app"],
  
     methods: ["GET", "POST", "PUT", "DELETE"],
