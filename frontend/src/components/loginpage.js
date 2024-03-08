@@ -37,7 +37,7 @@ function Loginpage() {
         body: JSON.stringify({ email, password }), // body data type must match "Content-Type" header
       });
 
-      if (response.ok) {
+      if (response) { //
         const auth_token = await response.json(); // parses JSON response into native JavaScript objects
         // changeAuthToken(auth_token);
         localStorage.setItem("auth_token", auth_token.authToken);
