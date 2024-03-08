@@ -49,8 +49,8 @@ function Loginpage() {
           console.log(
             "loginpage : we have reloded the page after navigating to home"
           );
-          window.location.reload();
-          console.log("Reload done in login page");
+          // window.location.reload();
+          // console.log("Reload done in login page");
         } else {
           alert("Invalid credentials");
         }
