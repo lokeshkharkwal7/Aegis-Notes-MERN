@@ -21,7 +21,7 @@ function Loginpage() {
 
   let navigate = useNavigate();
 
-  const host = "http://localhost:4000";
+  const host = "https://aegis-notes-mern-backend.vercel.app";
 
   const onSubmit = async (e) => {
     e.preventDefault();
